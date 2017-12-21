@@ -3,7 +3,6 @@
 //
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 
 #define STATUS int;
 #define TRUE 0;
@@ -29,7 +28,6 @@ STATUS insert_next_node(int data, List *list, Node *node);
 STATUS remove_node(List *list, Node *node);
 STATUS destory_list(List *list);
 STATUS sort_list(List *list);
-STATUS create_node(Node *node);
 
 
 int main(void)
@@ -47,7 +45,7 @@ List * init_list()
     return list;
 }
 
-int destory_list(List *list)
+STATUS destory_list(List *list)
 {
     if(list == NULL)
     {
@@ -77,16 +75,80 @@ STATUS insert_pre_node(int data, List *list, Node *node)
     {
         return FALSE;
     }
+
     Node *new_node = NULL;
     new_node = (Node *)malloc(sizeof(Node));
-    new_node->data = 
+    new_node->data = data;
+    new_node->pre = NULL;
+    new_node->next = NULL;
 
     if(list->size == 0)
     {
-        list->head = node;
-        list->tail = node;
-        list->size++;
-        return TRUE;
+        list->head = new_node;
+        list->tail = new_node;
     }
-    if()
+    else
+    {
+        new_node->next = node;
+        new_node->pre = node->pre;
+
+        if(list->pre == NULL)
+        {
+            list->head = new_node;
+        }
+        else
+        {
+            node->pre->next = new_node;
+        }
+
+        node->pre = node;
+    }
+    list->size++;
+    return TRUE;
 }
+
+STATUS insert_next_node(int data, List *list, Node *node)
+{
+    if(list == NULL)
+    {
+        return FALSE;
+    }
+
+    Node *new_node = NULL;
+    new_node = (Node *)malloc(sizeof(Node));
+    new_node->data = data;
+    new_node->pre = NULL;
+    new_node->next = NULL;
+
+    if(list->size == 0)
+    {
+        list->head = new_node;
+        list->tail = new_node;
+    }
+    else
+    {
+        if(node->next == NULL)
+        {
+            list->tail = new_node;
+        }
+        else
+        {
+            node->next->pre = new_node;
+        }
+        new_node->next = node->next;
+        new_node->pre = node;
+
+        node->next = new_node;
+    }
+
+    list->size++;
+    return TRUE;
+
+}
+
+STATUS sort_list(List *list)
+{
+
+}
+
+
