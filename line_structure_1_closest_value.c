@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define STATUS int;
 #define TRUE 0;
 #define FALSE -1;
 
@@ -20,19 +19,26 @@ typedef struct DoublyLinkedList
     int size;
     struct DoublyLinkedListNode *head;
     struct DoublyLinkedListNode *tail;
-}List;
+} List;
 
 List *init_list();
-STATUS insert_pre_node(int data, List *list, Node *node);
-STATUS insert_next_node(int data, List *list, Node *node);
-STATUS remove_node(List *list, Node *node);
-STATUS destory_list(List *list);
-STATUS sort_list(List *list);
+int insert_pre_node(int data, List *list, Node *node);
+int insert_next_node(int data, List *list, Node *node);
+int remove_node(List *list, Node *node);
+int destory_list(List *list);
+int sort_list(List *list);
 
 
 int main(void)
 {
-    printf("Hello!");
+    List *list_a = init_list();
+    int data;
+    do
+    {
+        printf("Insert your number. Enter '@' to finish.\n");
+        scanf("%d", &data);
+        getchar(); // Eat the Enter
+    }while(data != '@');
 }
 
 List * init_list()
@@ -45,7 +51,7 @@ List * init_list()
     return list;
 }
 
-STATUS destory_list(List *list)
+int destory_list(List *list)
 {
     if(list == NULL)
     {
@@ -69,7 +75,7 @@ STATUS destory_list(List *list)
     return TRUE;
 }
 
-STATUS insert_pre_node(int data, List *list, Node *node)
+int insert_pre_node(int data, List *list, Node *node)
 {
     if(list == NULL)
     {
@@ -92,7 +98,7 @@ STATUS insert_pre_node(int data, List *list, Node *node)
         new_node->next = node;
         new_node->pre = node->pre;
 
-        if(list->pre == NULL)
+        if(node->pre == NULL)
         {
             list->head = new_node;
         }
@@ -107,7 +113,7 @@ STATUS insert_pre_node(int data, List *list, Node *node)
     return TRUE;
 }
 
-STATUS insert_next_node(int data, List *list, Node *node)
+int insert_next_node(int data, List *list, Node *node)
 {
     if(list == NULL)
     {
@@ -146,9 +152,9 @@ STATUS insert_next_node(int data, List *list, Node *node)
 
 }
 
-STATUS sort_list(List *list)
-{
-
-}
+//int sort_list(List *list)
+//{
+//
+//}
 
 
